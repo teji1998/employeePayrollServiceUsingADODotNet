@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EmployeePayrollService
 {
-    class EmployeeRepository
+    public class EmployeeRepository
     {
         public static string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Employee_Payroll_Service;Integrated Security=True";
         SqlConnection connection = new SqlConnection(connectionString);
@@ -29,19 +29,19 @@ namespace EmployeePayrollService
                             employeePayroll.ID = reader.GetInt32(0);
                             employeePayroll.Name = reader.GetString(1);
                             employeePayroll.Basic_Pay = reader.GetDouble(2);
-                            employeePayroll.Start_Date = reader.GetString(3);
-                            employeePayroll.Gender = reader.GetString(4);
-                            employeePayroll.Mobile_number = reader.GetString(5);
-                            employeePayroll.Address = reader.GetString(6);
-                            employeePayroll.Department = reader.GetString(7);
-                            employeePayroll.Deductions = reader.GetDouble(8);
-                            employeePayroll.Taxable_Pay = reader.GetDouble(9);
-                            employeePayroll.Income_Tax = reader.GetDouble(10);
-                            employeePayroll.Net_Pay = reader.GetDouble(11);
-                            Console.WriteLine("Id:{0}\n Name:{1},\nBasic_Pay:{2},\nStart_Date:{3},\nGender:{4},\nMobile_number:{5},\nAddress:{6},\nDepartment:{7},\nDeductions{8},\nTaxable_Pay:{9}" +
-                                "\nIncome_Tax:{10},\nNet_Pay:{11}", employeePayroll.ID, employeePayroll.Name, employeePayroll.Basic_Pay, employeePayroll.Start_Date, employeePayroll.Gender,
+                            employeePayroll.Start_Date = reader.GetDateTime(3);
+                            employeePayroll.Mobile_number = reader.GetString(4);
+                            employeePayroll.Address = reader.GetString(5);
+                            employeePayroll.Department = reader.GetString(6);
+                            employeePayroll.Deductions = reader.GetDouble(7);
+                            employeePayroll.Taxable_Pay = reader.GetDouble(8);
+                            employeePayroll.Income_Tax = reader.GetDouble(9);
+                            employeePayroll.Net_Pay = reader.GetDouble(10);
+                            employeePayroll.Gender = reader.GetChar(11);
+                            Console.WriteLine("Id:{0}\n Name:{1},\nBasic_Pay:{2},\nStart_Date:{3},\nMobile_number:{4},\nAddress:{5},\nDepartment:{6},\nDeductions{7},\nTaxable_Pay:{8}" +
+                                "\nIncome_Tax:{9},\nNet_Pay:{10},\nGender:{ 4}", employeePayroll.ID, employeePayroll.Name, employeePayroll.Basic_Pay, employeePayroll.Start_Date,
                                 employeePayroll.Mobile_number, employeePayroll.Address, employeePayroll.Department, employeePayroll.Deductions, employeePayroll.Taxable_Pay, employeePayroll.Income_Tax,
-                                employeePayroll.Net_Pay);
+                                employeePayroll.Net_Pay, employeePayroll.Gender);
                         }
                     }
                     else
@@ -138,7 +138,7 @@ namespace EmployeePayrollService
         {
             try
             {
-                EmployeeModel model = new EmployeeModel();
+                EmployeeModel employeePayroll = new EmployeeModel();
                 using (this.connection)
                 {
                     string query = @"Select * from Employee_Payroll Where Start_Date between CAST ('2020-04-14' AS DATE) And  GETDATE();";
@@ -149,21 +149,22 @@ namespace EmployeePayrollService
                     {
                         while (reader.Read())
                         {
-                            model.ID = reader.GetInt32(0);
-                            model.Name = reader.GetString(1);
-                            model.Basic_Pay = reader.GetDouble(2);
-                            model.Start_Date = reader.GetString(3);
-                            model.Gender = reader.GetString(4);
-                            model.Mobile_number = reader.GetString(5);
-                            model.Address = reader.GetString(6);
-                            model.Department = reader.GetString(7);
-                            model.Deductions = reader.GetDouble(8);
-                            model.Taxable_Pay = reader.GetDouble(9);
-                            model.Income_Tax = reader.GetDouble(10);
-                            model.Net_Pay = reader.GetDouble(11);
-                            Console.WriteLine("Id:{0}\n Name:{1},\nBasic_Pay:{2},\nStart_Date:{3},\nGender:{4},\nMobile_number:{5},\nAddress:{6},\nDepartment:{7},\nDeductions{8}," +
-                                "\nTaxable_Pay:{9},\nIncome_Tax:{10},\nNet_Pay:{11}", model.ID, model.Name, model.Basic_Pay, model.Start_Date, model.Gender,
-                                  model.Mobile_number, model.Address, model.Department, model.Deductions, model.Taxable_Pay, model.Income_Tax, model.Net_Pay);
+                            employeePayroll.ID = reader.GetInt32(0);
+                            employeePayroll.Name = reader.GetString(1);
+                            employeePayroll.Basic_Pay = reader.GetDouble(2);
+                            employeePayroll.Start_Date = reader.GetDateTime(3);
+                            employeePayroll.Mobile_number = reader.GetString(4);
+                            employeePayroll.Address = reader.GetString(5);
+                            employeePayroll.Department = reader.GetString(6);
+                            employeePayroll.Deductions = reader.GetDouble(7);
+                            employeePayroll.Taxable_Pay = reader.GetDouble(8);
+                            employeePayroll.Income_Tax = reader.GetDouble(9);
+                            employeePayroll.Net_Pay = reader.GetDouble(10);
+                            employeePayroll.Gender = reader.GetChar(11);
+                            Console.WriteLine("Id:{0}\n Name:{1},\nBasic_Pay:{2},\nStart_Date:{3},\nMobile_number:{4},\nAddress:{5},\nDepartment:{6},\nDeductions{7},\nTaxable_Pay:{8}" +
+                                "\nIncome_Tax:{9},\nNet_Pay:{10},\nGender:{ 4}", employeePayroll.ID, employeePayroll.Name, employeePayroll.Basic_Pay, employeePayroll.Start_Date,
+                                employeePayroll.Mobile_number, employeePayroll.Address, employeePayroll.Department, employeePayroll.Deductions, employeePayroll.Taxable_Pay, employeePayroll.Income_Tax,
+                                employeePayroll.Net_Pay, employeePayroll.Gender);
                             Console.WriteLine("\n");
                         }
                     }
@@ -201,7 +202,7 @@ namespace EmployeePayrollService
                     {
                         while (dataReader.Read())
                         {
-                            model.Gender = dataReader.GetString(0);
+                            model.Gender = dataReader.GetChar(0);
                             model.Basic_Pay = dataReader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -239,7 +240,7 @@ namespace EmployeePayrollService
                     {
                         while (dataReader.Read())
                         {
-                            model.Gender = dataReader.GetString(0);
+                            model.Gender = dataReader.GetChar(0);
                             model.Basic_Pay = dataReader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -278,7 +279,7 @@ namespace EmployeePayrollService
                     {
                         while (reader.Read())
                         {
-                            model.Gender = reader.GetString(0);
+                            model.Gender = reader.GetChar(0);
                             model.Basic_Pay = reader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -318,7 +319,7 @@ namespace EmployeePayrollService
                     {
                         while (reader.Read())
                         {
-                            model.Gender = reader.GetString(0);
+                            model.Gender = reader.GetChar(0);
                             model.Basic_Pay = reader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -398,6 +399,143 @@ namespace EmployeePayrollService
                         return false;
                     }
 
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
+        public bool AddingEmployeeDetails(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("EmployeeInfo", this.connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Name", model.Name);
+                    sqlCommand.Parameters.AddWithValue("@Gender", model.Gender);
+                    sqlCommand.Parameters.AddWithValue("@Mobile_Number", model.Mobile_number);
+                    sqlCommand.Parameters.AddWithValue("@Address", model.Address);
+                    this.connection.Open();
+                    var result = sqlCommand.ExecuteNonQuery();
+                    Console.WriteLine("Number of rows affected : " + result);
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public bool AddingPayRollDetails(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("PayrollData", this.connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Start_Date", model.Start_Date);
+                    sqlCommand.Parameters.AddWithValue("@Basic_Pay", model.Basic_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Deductions", model.Deductions);
+                    sqlCommand.Parameters.AddWithValue("@Income_Tax", model.Income_Tax);
+                    sqlCommand.Parameters.AddWithValue("@Taxable_Pay", model.Taxable_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Net_Pay", model.Net_Pay);
+                    sqlCommand.Parameters.AddWithValue("@employee_id", model.Employee_Id);
+
+                    this.connection.Open();
+                    var result = sqlCommand.ExecuteNonQuery();
+                    Console.WriteLine("Number of rows affected : " + result);
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public bool AddingDepartment(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("DepartmentInfo", this.connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Department_Name", model.Department);
+                    this.connection.Open();
+                    var result = sqlCommand.ExecuteNonQuery();
+                    Console.WriteLine("Number of rows affected : " + result);
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public bool AddingToEmployeeDepartment(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("Employee_DepartmentInfo", this.connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Employee_Id", model.Employee_Id);
+                    sqlCommand.Parameters.AddWithValue("@Department_Id", model.Department_Id);
+                    this.connection.Open();
+                    var result = sqlCommand.ExecuteNonQuery();
+                    Console.WriteLine("Number of rows affected : " + result);
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch (Exception e)
