@@ -262,5 +262,84 @@ namespace EmployeePayrollService
             }
         }
 
+        public void FindingMinimumOfSalaryByGender()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                SqlConnection connection = new SqlConnection(connectionString);
+                using (this.connection)
+                {
+                    string query = @"Select Gender,MIN(Basic_Pay) from Employee_Payroll group by Gender";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            model.Gender = reader.GetString(0);
+                            model.Basic_Pay = reader.GetDouble(1);
+                            Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    reader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+
+        }
+
+        public void FindingMaximumOfSalaryByGender()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    string query = @"Select Gender,MAX(Basic_Pay) from Employee_Payroll group by Gender";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            model.Gender = reader.GetString(0);
+                            model.Basic_Pay = reader.GetDouble(1);
+                            Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    reader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
     }
 }

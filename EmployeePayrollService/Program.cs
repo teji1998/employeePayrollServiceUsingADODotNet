@@ -28,7 +28,9 @@ namespace EmployeePayrollService
             // repo.UpdateEmployee(emp);
             //repo.GetEmployeesInDateRange();
             //repo.FindingSumOfSalaryByGender();
-            repo.FindingAverageOfSalaryByGender();
+            //repo.FindingAverageOfSalaryByGender();
+            //repo.FindingMinimumOfSalaryByGender();
+            repo.FindingMaximumOfSalaryByGender();
             
         }
     }
