@@ -100,5 +100,38 @@ namespace EmployeePayrollService
                 connection.Close();
             }
         }
+
+        public bool UpdateEmployee(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand command = new SqlCommand("spUpdateEmployees", this.connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Name", model.Name);
+                    command.Parameters.AddWithValue("@Address", model.Address);
+                    command.Parameters.AddWithValue("@Department", model.Department);
+                    this.connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    Console.WriteLine("Number of rows affected : " + result);
+                    if (!result.Equals(0))
+                    {
+                        return true;
+                    }
+                    return false;
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
     }
 }

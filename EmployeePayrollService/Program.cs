@@ -21,7 +21,12 @@ namespace EmployeePayrollService
             emp.Taxable_Pay = 3000;
             emp.Income_Tax = 2900;
             emp.Net_Pay = 87000;
-            repo.AddEmployee(emp);
+            // repo.AddEmployee(emp);
+            emp.Name = "Liam";
+            emp.Address = "UK";
+            emp.Department = "Production";
+            repo.UpdateEmployee(emp);
+            
         }
     }
 }
