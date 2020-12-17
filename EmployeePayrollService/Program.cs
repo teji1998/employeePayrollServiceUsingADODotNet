@@ -31,7 +31,7 @@ namespace EmployeePayrollService
            // repo.FindingAverageOfSalaryByGender();
             //repo.FindingMinimumOfSalaryByGender();
             //repo.FindingMaximumOfSalaryByGender();
-            //repo.CountOContactsByGender();
+            //repo.CountContactsByGender();
             // emp.Name = "Liam";
             // repo.DeleteTheEmployee(emp);
             /*emp.Start_Date = new DateTime(2020,04,14);

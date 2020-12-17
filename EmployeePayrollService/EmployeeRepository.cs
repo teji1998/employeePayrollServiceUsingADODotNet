@@ -11,6 +11,10 @@ namespace EmployeePayrollService
         public static string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Employee_Payroll_Service;Integrated Security=True";
         SqlConnection connection = new SqlConnection(connectionString);
 
+        /// <summary>
+        /// Gets the employees.
+        /// </summary>
+        /// <exception cref="System.Exception"></exception>
         public void GetEmployees()
         {
             try
@@ -61,6 +65,12 @@ namespace EmployeePayrollService
             }
         }
 
+        /// <summary>
+        /// Adds the employee.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
         public bool AddEmployee(EmployeeModel model)
         {
             try
@@ -101,6 +111,12 @@ namespace EmployeePayrollService
             }
         }
 
+        /// <summary>
+        /// Updates the employee.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
         public bool UpdateEmployee(EmployeeModel model)
         {
             try
@@ -133,7 +149,10 @@ namespace EmployeePayrollService
             }
         }
 
-
+        /// <summary>
+        /// Gets the employees in date range.
+        /// </summary>
+        /// <exception cref="System.Exception"></exception>
         public void GetEmployeesInDateRange()
         {
             try
@@ -186,6 +205,10 @@ namespace EmployeePayrollService
             }
         }
 
+        /// <summary>
+        /// Finding the sum of salary by gender.
+        /// </summary>
+        /// <exception cref="System.Exception"></exception>
         public void FindingSumOfSalaryByGender()
         {
             try
@@ -226,6 +249,10 @@ namespace EmployeePayrollService
             }
         }
 
+        /// <summary>
+        /// Finding the average of salary by gender.
+        /// </summary>
+        /// <exception cref="System.Exception"></exception>
         public void FindingAverageOfSalaryByGender()
         {
             try
@@ -265,6 +292,10 @@ namespace EmployeePayrollService
             }
         }
 
+        /// <summary>
+        /// Finding the minimum of salary by gender.
+        /// </summary>
+        /// <exception cref="System.Exception"></exception>
         public void FindingMinimumOfSalaryByGender()
         {
             try
@@ -306,6 +337,10 @@ namespace EmployeePayrollService
 
         }
 
+        /// <summary>
+        /// Finding the maximum of salary by gender.
+        /// </summary>
+        /// <exception cref="System.Exception"></exception>
         public void FindingMaximumOfSalaryByGender()
         {
             try
@@ -346,7 +381,11 @@ namespace EmployeePayrollService
             }
         }
 
-        public void CountOContactsByGender()
+        /// <summary>
+        /// Counts the contacts by gender.
+        /// </summary>
+        /// <exception cref="System.Exception"></exception>
+        public void CountContactsByGender()
         {
             try
             {
@@ -383,6 +422,12 @@ namespace EmployeePayrollService
 
         }
 
+        /// <summary>
+        /// Deletes the employee.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
         public bool DeleteTheEmployee(EmployeeModel model)
         {
             try
@@ -416,6 +461,12 @@ namespace EmployeePayrollService
             }
         }
 
+        /// <summary>
+        /// Adding the employee details to employee table.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
         public bool AddingEmployeeDetails(EmployeeModel model)
         {
             try
@@ -450,6 +501,13 @@ namespace EmployeePayrollService
                 this.connection.Close();
             }
         }
+
+        /// <summary>
+        /// Adding the pay roll details to payroll table.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
         public bool AddingPayRollDetails(EmployeeModel model)
         {
             try
@@ -488,6 +546,13 @@ namespace EmployeePayrollService
                 this.connection.Close();
             }
         }
+
+        /// <summary>
+        /// Adding to the department table.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
         public bool AddingDepartment(EmployeeModel model)
         {
             try
@@ -520,6 +585,13 @@ namespace EmployeePayrollService
                 this.connection.Close();
             }
         }
+
+        /// <summary>
+        /// Adding to employee department table.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
         public bool AddingToEmployeeDepartment(EmployeeModel model)
         {
             try
@@ -553,6 +625,10 @@ namespace EmployeePayrollService
             }
         }
 
+        /// <summary>
+        /// Getting the employee table details.
+        /// </summary>
+        /// <exception cref="System.Exception"></exception>
         public void GettingEmployeeDetails()
         {
             try

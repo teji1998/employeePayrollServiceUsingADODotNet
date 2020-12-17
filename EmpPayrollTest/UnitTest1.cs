@@ -10,6 +10,9 @@ namespace EmpPayrollTest
         EmployeeRepository repo = new EmployeeRepository();
         EmployeeModel emp = new EmployeeModel();
 
+        /// <summary>
+        /// Given the details when added into employee payroll table should return true.
+        /// </summary>
         [TestMethod]
         public void givenDetails_WhenAddedIntoEmployeePayrollTable_ShouldReturnTrue()
         {
@@ -28,6 +31,9 @@ namespace EmpPayrollTest
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Given the details when updated in employee payroll table should return true.
+        /// </summary>
         [TestMethod]
         public void givenDetails_WhenUpdatedInEmployeePayrollTable_ShouldReturnTrue()
         {
@@ -38,6 +44,9 @@ namespace EmpPayrollTest
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Given the details when added into employee table should return true.
+        /// </summary>
         [TestMethod]
         public void givenDetails_WhenAddedIntoEmployeeTable_ShouldReturnTrue()
         {
@@ -49,6 +58,9 @@ namespace EmpPayrollTest
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Given the details when added into payroll table should return true.
+        /// </summary>
         [TestMethod]
         public void givenDetails_WhenAddedIntoPayrollTable_ShouldReturnTrue()
         {
@@ -63,6 +75,9 @@ namespace EmpPayrollTest
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Given the details when added into department table should return true.
+        /// </summary>
         [TestMethod]
         public void givenDetails_WhenAddedIntoDepartmentTable_ShouldReturnTrue()
         {
@@ -71,6 +86,9 @@ namespace EmpPayrollTest
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Given the details when added into employee department table should return true.
+        /// </summary>
         [TestMethod]
         public void givenDetails_WhenAddedIntoEmployeeDepartmentTable_ShouldReturnTrue()
         {
