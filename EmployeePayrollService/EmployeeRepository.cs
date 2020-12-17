@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -57,6 +58,46 @@ namespace EmployeePayrollService
             finally
             {
                 this.connection.Close();
+            }
+        }
+
+        public bool AddEmployee(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand command = new SqlCommand("dbo.SpAddEmployeeDetails", this.connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Name", model.Name);
+                    command.Parameters.AddWithValue("@Basic_Pay", model.Basic_Pay);
+                    command.Parameters.AddWithValue("@Start_Date", model.Start_Date);
+                    command.Parameters.AddWithValue("@Gender", model.Gender);
+                    command.Parameters.AddWithValue("@Mobile_number", model.Mobile_number);
+                    command.Parameters.AddWithValue("@Address", model.Address);
+                    command.Parameters.AddWithValue("@Department", model.Department);
+                    command.Parameters.AddWithValue("@Deductions", model.Deductions);
+                    command.Parameters.AddWithValue("@Taxable_Pay", model.Taxable_Pay);
+                    command.Parameters.AddWithValue("@Income_Tax", model.Income_Tax);
+                    command.Parameters.AddWithValue("@Net_Pay", model.Net_Pay);
+                    connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    Console.WriteLine("Number of rows affected : " + result);
+                    connection.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
     }
