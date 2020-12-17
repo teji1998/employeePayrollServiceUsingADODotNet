@@ -27,7 +27,8 @@ namespace EmployeePayrollService
             emp.Department = "Production";
             // repo.UpdateEmployee(emp);
             //repo.GetEmployeesInDateRange();
-            repo.FindingSumOfSalaryByGender();
+            //repo.FindingSumOfSalaryByGender();
+            repo.FindingAverageOfSalaryByGender();
             
         }
     }

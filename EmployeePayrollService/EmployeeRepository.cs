@@ -224,5 +224,43 @@ namespace EmployeePayrollService
             }
         }
 
+        public void FindingAverageOfSalaryByGender()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    string query = @"Select Gender,AVG(Basic_Pay) from Employee_Payroll group by Gender";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Gender = dataReader.GetString(0);
+                            model.Basic_Pay = dataReader.GetDouble(1);
+                            Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
     }
 }
