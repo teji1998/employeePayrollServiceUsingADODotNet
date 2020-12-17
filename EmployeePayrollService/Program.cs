@@ -30,7 +30,8 @@ namespace EmployeePayrollService
             //repo.FindingSumOfSalaryByGender();
             //repo.FindingAverageOfSalaryByGender();
             //repo.FindingMinimumOfSalaryByGender();
-            repo.FindingMaximumOfSalaryByGender();
+            //repo.FindingMaximumOfSalaryByGender();
+            repo.CountOContactsByGender();
             
         }
     }

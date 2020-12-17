@@ -341,5 +341,40 @@ namespace EmployeePayrollService
             }
         }
 
+        public void CountOContactsByGender()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    string query = @"Select Gender,COUNT(Gender) from Employee_Payroll group by Gender";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine(reader.GetString(0) + " " );
+                            Console.WriteLine(reader.GetInt32(1));
+
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    reader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
     }
 }
