@@ -26,7 +26,8 @@ namespace EmployeePayrollService
             emp.Address = "UK";
             emp.Department = "Production";
             // repo.UpdateEmployee(emp);
-            repo.GetEmployeesInDateRange();
+            //repo.GetEmployeesInDateRange();
+            repo.FindingSumOfSalaryByGender();
             
         }
     }
