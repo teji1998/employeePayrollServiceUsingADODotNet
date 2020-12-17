@@ -193,7 +193,8 @@ namespace EmployeePayrollService
                 EmployeeModel model = new EmployeeModel();
                 using (this.connection)
                 {
-                    string query = @" Select Gender,SUM(Basic_Pay) as SUM_OF_SALARY From Employee_Payroll group by Gender";
+                    string query = @" Select Gender,SUM(Payroll.Basic_Pay) as Sum_salary from Payroll payroll inner join Employee emp 
+                        on payroll.Employee_id = emp.Employee_id  group by Gender";
 
                     SqlCommand command = new SqlCommand(query, this.connection);
                     this.connection.Open();
@@ -202,7 +203,7 @@ namespace EmployeePayrollService
                     {
                         while (dataReader.Read())
                         {
-                            model.Gender = dataReader.GetChar(0);
+                            model.Gender = Convert.ToChar(dataReader.GetString(0));
                             model.Basic_Pay = dataReader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -232,7 +233,8 @@ namespace EmployeePayrollService
                 EmployeeModel model = new EmployeeModel();
                 using (this.connection)
                 {
-                    string query = @"Select Gender,AVG(Basic_Pay) from Employee_Payroll group by Gender";
+                    string query = @"Select Gender,AVG(Payroll.Basic_Pay) as Avg_Pay from Payroll payroll inner join Employee emp
+                                    on payroll.Employee_id = emp.Employee_id group by Gender; ";
                     SqlCommand command = new SqlCommand(query, this.connection);
                     this.connection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
@@ -240,7 +242,7 @@ namespace EmployeePayrollService
                     {
                         while (dataReader.Read())
                         {
-                            model.Gender = dataReader.GetChar(0);
+                            model.Gender = Convert.ToChar(dataReader.GetString(0));
                             model.Basic_Pay = dataReader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -271,7 +273,8 @@ namespace EmployeePayrollService
                 SqlConnection connection = new SqlConnection(connectionString);
                 using (this.connection)
                 {
-                    string query = @"Select Gender,MIN(Basic_Pay) from Employee_Payroll group by Gender";
+                    string query = @"string query = @Select Gender, MIN(Payroll.Basic_Pay) as Min_Pay from Payroll payroll inner join Employee 
+                                                      emp on payroll.Employee_id = emp.Employee_id group by Gender";
                     SqlCommand command = new SqlCommand(query, this.connection);
                     this.connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
@@ -279,7 +282,7 @@ namespace EmployeePayrollService
                     {
                         while (reader.Read())
                         {
-                            model.Gender = reader.GetChar(0);
+                            model.Gender = Convert.ToChar(reader.GetString(0));
                             model.Basic_Pay = reader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -311,7 +314,8 @@ namespace EmployeePayrollService
                 EmployeeModel model = new EmployeeModel();
                 using (this.connection)
                 {
-                    string query = @"Select Gender,MAX(Basic_Pay) from Employee_Payroll group by Gender";
+                    string query = @"Select Gender,MAX(Payroll.Basic_Pay) as Max_Pay from Payroll payroll inner join Employee emp
+                                    on payroll.Employee_id = emp.Employee_id group by Gender"; 
                     SqlCommand command = new SqlCommand(query, this.connection);
                     this.connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
@@ -319,7 +323,7 @@ namespace EmployeePayrollService
                     {
                         while (reader.Read())
                         {
-                            model.Gender = reader.GetChar(0);
+                            model.Gender = Convert.ToChar(reader.GetString(0));
                             model.Basic_Pay = reader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -350,7 +354,8 @@ namespace EmployeePayrollService
                 EmployeeModel model = new EmployeeModel();
                 using (this.connection)
                 {
-                    string query = @"Select Gender,COUNT(Gender) from Employee_Payroll group by Gender";
+                    string query = @"Select Gender,COUNT(Payroll.Basic_Pay) as count from Payroll payroll inner join Employee emp
+                                    on payroll.Employee_id = emp.Employee_id group by Gender";
                     SqlCommand command = new SqlCommand(query, this.connection);
                     this.connection.Open();
                     SqlDataReader reader = command.ExecuteReader();

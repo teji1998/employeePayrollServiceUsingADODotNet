@@ -27,8 +27,8 @@ namespace EmployeePayrollService
             emp.Department = "Production";*/
             // repo.UpdateEmployee(emp);
             //repo.GetEmployeesInDateRange();
-            //repo.FindingSumOfSalaryByGender();
-            //repo.FindingAverageOfSalaryByGender();
+            repo.FindingSumOfSalaryByGender();
+           // repo.FindingAverageOfSalaryByGender();
             //repo.FindingMinimumOfSalaryByGender();
             //repo.FindingMaximumOfSalaryByGender();
             //repo.CountOContactsByGender();
@@ -52,7 +52,7 @@ namespace EmployeePayrollService
             emp.Employee_Id = 4;
             emp.Department_Id = 6;
             //repo.AddingToEmployeeDepartment(emp);
-            repo.GettingEmployeeDetails();
+           // repo.GettingEmployeeDetails();
         }
     }
 }
