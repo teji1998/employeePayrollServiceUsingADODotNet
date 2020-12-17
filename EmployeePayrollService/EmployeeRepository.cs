@@ -18,7 +18,7 @@ namespace EmployeePayrollService
                 EmployeeModel employeePayroll = new EmployeeModel();
                 using (this.connection)
                 {
-                    string query = @"select ID ,Name,Basic_Pay, Start_Date ,Gender,Mobile_number,Address , Department ,Deductions,Taxable_Pay ,Income_Tax ,Net_Pay from Employee_Payroll;";
+                    string query = @"select ID ,Name,Basic_Pay, Start_Date ,Mobile_number,Address , Department ,Deductions,Taxable_Pay ,Income_Tax ,Net_Pay,Gender from Employee_Payroll;";
                     SqlCommand cmd = new SqlCommand(query, connection);
                     this.connection.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -37,9 +37,9 @@ namespace EmployeePayrollService
                             employeePayroll.Taxable_Pay = reader.GetDouble(8);
                             employeePayroll.Income_Tax = reader.GetDouble(9);
                             employeePayroll.Net_Pay = reader.GetDouble(10);
-                            employeePayroll.Gender = reader.GetChar(11);
+                            employeePayroll.Gender = Convert.ToChar(reader.GetString(11));
                             Console.WriteLine("Id:{0}\n Name:{1},\nBasic_Pay:{2},\nStart_Date:{3},\nMobile_number:{4},\nAddress:{5},\nDepartment:{6},\nDeductions{7},\nTaxable_Pay:{8}" +
-                                "\nIncome_Tax:{9},\nNet_Pay:{10},\nGender:{ 4}", employeePayroll.ID, employeePayroll.Name, employeePayroll.Basic_Pay, employeePayroll.Start_Date,
+                                "\nIncome_Tax:{9},\nNet_Pay:{10},\nGender:{11}", employeePayroll.ID, employeePayroll.Name, employeePayroll.Basic_Pay, employeePayroll.Start_Date,
                                 employeePayroll.Mobile_number, employeePayroll.Address, employeePayroll.Department, employeePayroll.Deductions, employeePayroll.Taxable_Pay, employeePayroll.Income_Tax,
                                 employeePayroll.Net_Pay, employeePayroll.Gender);
                         }
@@ -160,9 +160,9 @@ namespace EmployeePayrollService
                             employeePayroll.Taxable_Pay = reader.GetDouble(8);
                             employeePayroll.Income_Tax = reader.GetDouble(9);
                             employeePayroll.Net_Pay = reader.GetDouble(10);
-                            employeePayroll.Gender = reader.GetChar(11);
+                            employeePayroll.Gender = Convert.ToChar(reader.GetString(11));
                             Console.WriteLine("Id:{0}\n Name:{1},\nBasic_Pay:{2},\nStart_Date:{3},\nMobile_number:{4},\nAddress:{5},\nDepartment:{6},\nDeductions{7},\nTaxable_Pay:{8}" +
-                                "\nIncome_Tax:{9},\nNet_Pay:{10},\nGender:{ 4}", employeePayroll.ID, employeePayroll.Name, employeePayroll.Basic_Pay, employeePayroll.Start_Date,
+                                "\nIncome_Tax:{9},\nNet_Pay:{10},\nGender:{ 11}", employeePayroll.ID, employeePayroll.Name, employeePayroll.Basic_Pay, employeePayroll.Start_Date,
                                 employeePayroll.Mobile_number, employeePayroll.Address, employeePayroll.Department, employeePayroll.Deductions, employeePayroll.Taxable_Pay, employeePayroll.Income_Tax,
                                 employeePayroll.Net_Pay, employeePayroll.Gender);
                             Console.WriteLine("\n");
@@ -546,6 +546,52 @@ namespace EmployeePayrollService
             {
                 this.connection.Close();
             }
+        }
+
+        public void GettingEmployeeDetails()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    string query = @"SELECT Employee_Id,Name,Gender,Mobile_number,Address
+                                    FROM Employee";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Employee_Id = dataReader.GetInt32(0);
+                            model.Name = dataReader.GetString(1);
+                            model.Gender = Convert.ToChar(dataReader.GetString(2));
+                            model.Mobile_number = dataReader.GetString(3);
+                            model.Address = dataReader.GetString(4);
+                            Console.WriteLine("{0},{1},{2},{3},{4}",
+                                model.Employee_Id, model.Name, model.Gender,
+                                model.Mobile_number, model.Address);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+
         }
     }
 }

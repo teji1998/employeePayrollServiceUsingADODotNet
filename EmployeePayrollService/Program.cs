@@ -51,7 +51,8 @@ namespace EmployeePayrollService
             //repo.AddingEmployeeDetails(emp);
             emp.Employee_Id = 4;
             emp.Department_Id = 6;
-            repo.AddingToEmployeeDepartment(emp);
+            //repo.AddingToEmployeeDepartment(emp);
+            repo.GettingEmployeeDetails();
         }
     }
 }
