@@ -72,7 +72,6 @@ namespace EmployeePayrollService
                     command.Parameters.AddWithValue("@Name", model.Name);
                     command.Parameters.AddWithValue("@Basic_Pay", model.Basic_Pay);
                     command.Parameters.AddWithValue("@Start_Date", model.Start_Date);
-                    command.Parameters.AddWithValue("@Gender", model.Gender);
                     command.Parameters.AddWithValue("@Mobile_number", model.Mobile_number);
                     command.Parameters.AddWithValue("@Address", model.Address);
                     command.Parameters.AddWithValue("@Department", model.Department);
@@ -80,6 +79,7 @@ namespace EmployeePayrollService
                     command.Parameters.AddWithValue("@Taxable_Pay", model.Taxable_Pay);
                     command.Parameters.AddWithValue("@Income_Tax", model.Income_Tax);
                     command.Parameters.AddWithValue("@Net_Pay", model.Net_Pay);
+                    command.Parameters.AddWithValue("@Gender", model.Gender);
                     connection.Open();
                     var result = command.ExecuteNonQuery();
                     Console.WriteLine("Number of rows affected : " + result);
