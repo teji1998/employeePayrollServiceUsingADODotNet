@@ -25,7 +25,8 @@ namespace EmployeePayrollService
             emp.Name = "Liam";
             emp.Address = "UK";
             emp.Department = "Production";
-            repo.UpdateEmployee(emp);
+            // repo.UpdateEmployee(emp);
+            repo.GetEmployeesInDateRange();
             
         }
     }

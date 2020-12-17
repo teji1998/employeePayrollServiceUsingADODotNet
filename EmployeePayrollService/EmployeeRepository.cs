@@ -133,5 +133,57 @@ namespace EmployeePayrollService
             }
         }
 
+
+        public void GetEmployeesInDateRange()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    string query = @"Select * from Employee_Payroll Where Start_Date between CAST ('2020-04-14' AS DATE) And  GETDATE();";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            model.ID = reader.GetInt32(0);
+                            model.Name = reader.GetString(1);
+                            model.Basic_Pay = reader.GetDouble(2);
+                            model.Start_Date = reader.GetString(3);
+                            model.Gender = reader.GetString(4);
+                            model.Mobile_number = reader.GetString(5);
+                            model.Address = reader.GetString(6);
+                            model.Department = reader.GetString(7);
+                            model.Deductions = reader.GetDouble(8);
+                            model.Taxable_Pay = reader.GetDouble(9);
+                            model.Income_Tax = reader.GetDouble(10);
+                            model.Net_Pay = reader.GetDouble(11);
+                            Console.WriteLine("Id:{0}\n Name:{1},\nBasic_Pay:{2},\nStart_Date:{3},\nGender:{4},\nMobile_number:{5},\nAddress:{6},\nDepartment:{7},\nDeductions{8}," +
+                                "\nTaxable_Pay:{9},\nIncome_Tax:{10},\nNet_Pay:{11}", model.ID, model.Name, model.Basic_Pay, model.Start_Date, model.Gender,
+                                  model.Mobile_number, model.Address, model.Department, model.Deductions, model.Taxable_Pay, model.Income_Tax, model.Net_Pay);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    reader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
     }
 }
