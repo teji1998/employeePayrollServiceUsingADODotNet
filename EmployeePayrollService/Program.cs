@@ -9,8 +9,8 @@ namespace EmployeePayrollService
             Console.WriteLine("Welcome to the employee payroll service !!!!");
             EmployeeRepository repo = new EmployeeRepository();
             EmployeeModel emp = new EmployeeModel();
-           // repo.GetEmployees();
-            emp.Name = "Liam";
+            // repo.GetEmployees();
+            /*emp.Name = "Liam";
             emp.Basic_Pay = 90000;
             emp.Start_Date = "22/2/2019";
             emp.Gender = "Male";
@@ -24,14 +24,16 @@ namespace EmployeePayrollService
             // repo.AddEmployee(emp);
             emp.Name = "Liam";
             emp.Address = "UK";
-            emp.Department = "Production";
+            emp.Department = "Production";*/
             // repo.UpdateEmployee(emp);
             //repo.GetEmployeesInDateRange();
             //repo.FindingSumOfSalaryByGender();
             //repo.FindingAverageOfSalaryByGender();
             //repo.FindingMinimumOfSalaryByGender();
             //repo.FindingMaximumOfSalaryByGender();
-            repo.CountOContactsByGender();
+            //repo.CountOContactsByGender();
+            emp.Name = "Liam";
+            repo.DeleteTheEmployee(emp);
             
         }
     }

@@ -376,5 +376,38 @@ namespace EmployeePayrollService
             }
 
         }
+
+        public bool DeleteTheEmployee(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand command = new SqlCommand("DeleteEmployees", this.connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Name", model.Name);
+                    this.connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    Console.WriteLine("Number of rows affected : " + result);
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
     }
 }
