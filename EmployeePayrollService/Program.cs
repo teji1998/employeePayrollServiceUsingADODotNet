@@ -27,7 +27,7 @@ namespace EmployeePayrollService
             emp.Department = "Production";*/
             // repo.UpdateEmployee(emp);
             //repo.GetEmployeesInDateRange();
-            repo.FindingSumOfSalaryByGender();
+            //repo.FindingSumOfSalaryByGender();
            // repo.FindingAverageOfSalaryByGender();
             //repo.FindingMinimumOfSalaryByGender();
             //repo.FindingMaximumOfSalaryByGender();
@@ -42,15 +42,18 @@ namespace EmployeePayrollService
             emp.Net_Pay = 87000;
             emp.Employee_Id = 4;*/
             //repo.AddingPayRollDetails(emp);
-            emp.Name = "Pierre";
-            emp.Gender = 'M';
-            emp.Mobile_number = "9949831234";
-            emp.Address = "Paris";
-            emp.Department = "IOT";
+            emp.Name = "Pansy";
+            emp.Gender = 'F';
+            emp.Mobile_number = "98456831234";
+            emp.Address = "London";
+            emp.Basic_Pay = 700000;
+            emp.Department_Id = 5;
+            emp.Start_Date = new DateTime(2020, 09, 14);
+            repo.AddEmployeeDetailsToMultipleTables(emp);
             // repo.AddingDepartment(emp);
             //repo.AddingEmployeeDetails(emp);
-            emp.Employee_Id = 4;
-            emp.Department_Id = 6;
+            /*emp.Employee_Id = 4;
+            emp.Department_Id = 6;*/
             //repo.AddingToEmployeeDepartment(emp);
            // repo.GettingEmployeeDetails();
         }

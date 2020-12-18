@@ -674,5 +674,43 @@ namespace EmployeePayrollService
             }
 
         }
+
+        public bool AddEmployeeDetailsToMultipleTables(EmployeeModel model)
+        {
+           try
+            {
+                using (this.connection)
+                {
+                    SqlCommand command = new SqlCommand("spAddEmployeeIntoMultipleTable", this.connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Name", model.Name);
+                    command.Parameters.AddWithValue("@Gender", model.Gender);
+                    command.Parameters.AddWithValue("@Mobile_number", model.Mobile_number);
+                    command.Parameters.AddWithValue("@Address", model.Address);
+                    command.Parameters.AddWithValue("@Basic_Pay", model.Basic_Pay);
+                    command.Parameters.AddWithValue("@Start_Date", model.Start_Date);
+                    command.Parameters.AddWithValue("@Department_Id", model.Department_Id);
+                    this.connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    Console.WriteLine("Number of rows affected : " + result);
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
     }
 }
