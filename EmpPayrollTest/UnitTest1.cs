@@ -98,5 +98,19 @@ namespace EmpPayrollTest
             Assert.IsTrue(result);
         }
 
+        [TestMethod]
+        public void givenDetails_WhenAddedInMultipleTables_ShouldReturnTrue()
+        {
+            emp.Name = "Elsa";
+            emp.Gender = 'F';
+            emp.Mobile_number = "8099234540";
+            emp.Address = "Iceland";
+            emp.Basic_Pay = 500000;
+            emp.Department_Id = 3;
+            emp.Start_Date = new DateTime(2019, 1, 13);
+            bool result = repo.AddEmployeeDetailsToMultipleTables(emp);
+            Assert.IsTrue(result);
+        }
+
     }
 }
