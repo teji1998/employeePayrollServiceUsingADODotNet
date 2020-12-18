@@ -98,6 +98,9 @@ namespace EmpPayrollTest
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        /// Givens the details when added in multiple tables should return true.
+        /// </summary>
         [TestMethod]
         public void givenDetails_WhenAddedInMultipleTables_ShouldReturnTrue()
         {
