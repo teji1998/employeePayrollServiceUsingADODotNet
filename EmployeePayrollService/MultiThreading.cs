@@ -101,7 +101,7 @@ namespace EmployeePayrollService
             listemployeeModel.Add(employeeData);
         }
 
-        public void AddEmployeePayrollwithTheard(List<EmployeeModel> listemployeeModel)
+        public void AddEmployeePayrollwithThread(List<EmployeeModel> listemployeeModel)
         {
             listemployeeModel.ForEach(employeeData =>
             {
@@ -125,7 +125,7 @@ namespace EmployeePayrollService
             {
                 Thread thread = new Thread(() =>
                 {
-                    result = repo.updateEmployee(employee);
+                    result = repo.UpdateEmployee(employee);
                     Console.WriteLine("Employee added" + employee.Name);
                 });
                 thread.Start();

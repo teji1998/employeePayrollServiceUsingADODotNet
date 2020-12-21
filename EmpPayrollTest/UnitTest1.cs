@@ -174,7 +174,7 @@ namespace EmpPayrollTest
             DateTime startTime = DateTime.Now;
             ops.AddEmployeePayroll(Models);
             DateTime stopTime = DateTime.Now;
-            Console.WriteLine("Duration without thread ;" + (stopTime - startTime));
+            Console.WriteLine("Duration without thread :" + (stopTime - startTime));
         }
 
         /// <summary>
@@ -186,18 +186,18 @@ namespace EmpPayrollTest
             MultiThreading ops = new MultiThreading();
             List<EmployeeModel> Models = AddingDataToList();
             DateTime startTimeThread = DateTime.Now;
-            ops.AddEmployeePayrollwithTheard(Models);
+            ops.AddEmployeePayrollwithThread(Models);
             DateTime stopTimethread = DateTime.Now;
-            Console.WriteLine("Duration with thread ;" + (stopTimethread - startTimeThread));
+            Console.WriteLine("Duration with thread :" + (stopTimethread - startTimeThread));
         }
 
         public List<EmployeeModel> updateList()
         {
-            List<EmployeeModel> upadateList = new List<EmployeeModel>();
-            upadateList.Add(new EmployeeModel { Name = "Teju", Address = "Bangkok" });
-            upadateList.Add(new EmployeeModel { Name = "Liam", Address = "Wadala" });
-            upadateList.Add(new EmployeeModel { Name = "black", Address = "Ktk" });
-            return upadateList;
+            List<EmployeeModel> updatedList = new List<EmployeeModel>();
+            updatedList.Add(new EmployeeModel { Name = "Teju", Address = "Bangkok",Department="Dance" });
+            updatedList.Add(new EmployeeModel { Name = "Liam", Address = "Wadala", Department = "Dance" });
+            updatedList.Add(new EmployeeModel { Name = "black", Address = "Ktk", Department = "Dance" });
+            return updatedList;
 
         }
         [TestMethod]
