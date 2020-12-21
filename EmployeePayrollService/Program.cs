@@ -49,7 +49,7 @@ namespace EmployeePayrollService
             emp.Basic_Pay = 700000;
             emp.Department_Id = 5;
             emp.Start_Date = new DateTime(2020, 09, 14);
-            repo.AddEmployeeDetailsToMultipleTables(emp);
+           // repo.AddEmployeeDetailsToMultipleTables(emp);
             // repo.AddingDepartment(emp);
             //repo.AddingEmployeeDetails(emp);
             /*emp.Employee_Id = 4;

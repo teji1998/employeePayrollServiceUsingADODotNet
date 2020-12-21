@@ -10,14 +10,15 @@ namespace EmployeePayrollService
     public class MultiThreading
     {
         public static string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Employee_Payroll_Service;Integrated Security=True";
-        SqlConnection connection = new SqlConnection(connectionString);
-        public bool addEmployee(EmployeeModel model)
+        
+        public bool AddEmployeee(EmployeeModel model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand command = new SqlCommand("dbo.SpAddEmployeeDetails", this.connection);
+                    SqlCommand command = new SqlCommand("dbo.SpAddEmployeeDetails", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Name", model.Name);
                     command.Parameters.AddWithValue("@Basic_Pay", model.Basic_Pay);
@@ -30,7 +31,7 @@ namespace EmployeePayrollService
                     command.Parameters.AddWithValue("@Income_Tax", model.Income_Tax);
                     command.Parameters.AddWithValue("@Net_Pay", model.Net_Pay);
                     command.Parameters.AddWithValue("@Gender", model.Gender);
-                    this.connection.Open();
+                    connection.Open();
                     var result = command.ExecuteNonQuery();
                     if (!result.Equals(0))
                     {
@@ -45,7 +46,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+               connection.Close();
             }
         }
         public bool AddMultipleElementToDB(List<EmployeeModel> Models)
@@ -53,7 +54,7 @@ namespace EmployeePayrollService
             foreach (EmployeeModel employee in Models)
             {
                 Console.WriteLine("Employee being added:" + employee.Name);
-                bool result = addEmployee(employee);
+                bool result = AddEmployeee(employee);
                 Console.WriteLine("Employee Added:" + employee.Name);
                 if (result == false)
                 {
@@ -63,8 +64,26 @@ namespace EmployeePayrollService
             return true;
         }
 
+        public bool AddEmployeesToDBWithThread(List<EmployeeModel> models)
+        {
+            bool result = false;
+            models.ForEach(employee =>
+            {
+                Task thread = new Task(() =>
+                {
+                    result = AddEmployeee(employee);
+                    Console.WriteLine("Employee added" + employee.Name);
+                });
+                thread.Start();
+            });
+            return result;
+
+        }
+
+
 
         public List<EmployeeModel> listemployeeModel = new List<EmployeeModel>();
+
         public void AddEmployeePayroll(List<EmployeeModel> listemployeeModel)
         {
             listemployeeModel.ForEach(employeeData =>
@@ -96,5 +115,7 @@ namespace EmployeePayrollService
             });
             Console.WriteLine(this.listemployeeModel.Count);
         }
+
+        
     }
 }

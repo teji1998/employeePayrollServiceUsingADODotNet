@@ -15,7 +15,7 @@ namespace EmpPayrollTest
         /// <summary>
         /// Given the details when added into employee payroll table should return true.
         /// </summary>
-        [TestMethod]
+       /* [TestMethod]
         public void givenDetails_WhenAddedIntoEmployeePayrollTable_ShouldReturnTrue()
         {
             emp.Name = "Liam";
@@ -31,7 +31,7 @@ namespace EmpPayrollTest
             emp.Gender = 'M';
             bool result = repo.AddEmployee(emp);
             Assert.IsTrue(result);
-        }
+        }*/
 
         /// <summary>
         /// Given the details when updated in employee payroll table should return true.
@@ -121,14 +121,18 @@ namespace EmpPayrollTest
         {
             List<EmployeeModel> models = new List<EmployeeModel>();
 
-            models.Add(new EmployeeModel() { Name="Teju",Basic_Pay=90000,Start_Date= new DateTime(2018, 09, 11),Mobile_number="9878675645",Address="mum",Department="Music",Deductions=900,Taxable_Pay=670,Income_Tax=890,Net_Pay=90000,Gender='F' });
+           // models.Add(new EmployeeModel() { Name="Mango",Basic_Pay=90000,Start_Date= new DateTime(2018, 09, 11),Mobile_number="9878675645",Address="mum",Department="Music",Deductions=900,Taxable_Pay=670,Income_Tax=890,Net_Pay=90000,Gender='F' });
             models.Add(new EmployeeModel() { Name = "Looney", Basic_Pay = 60000, Start_Date = new DateTime(2019, 09, 11), Mobile_number = "9878605645", Address = "mira", Department = "It", Deductions = 1900, Taxable_Pay = 670, Income_Tax = 890, Net_Pay = 90000, Gender = 'M' });
             models.Add(new EmployeeModel() { Name = "black", Basic_Pay = 900000, Start_Date = new DateTime(2017, 09, 11), Mobile_number = "9878695645", Address = "mumbaiii", Department = "Music", Deductions = 900, Taxable_Pay = 670, Income_Tax = 890, Net_Pay = 90000, Gender = 'M' });
 
             return models;
         }
+
+        /// <summary>
+        /// Given details the when added without threading should return equal.
+        /// </summary>
         [TestMethod]
-        public void AddingToListWithout_Threading()
+        public void givendetails_WhenAddedWithoutThreading_ShouldReturnEqual()
         {
             List<EmployeeModel> listModel = AddingDataToList();
             bool expected = true;
@@ -137,10 +141,59 @@ namespace EmpPayrollTest
             stopwatch.Start();
             bool actual = ops.AddMultipleElementToDB(listModel);
             stopwatch.Stop();
-            Console.WriteLine("Time taken to add to db without threads is :{0} ms", stopwatch.ElapsedMilliseconds);
+            Console.WriteLine("Time taken to add without thread is :{0} ms", stopwatch.ElapsedMilliseconds);//in milliseconds
             Assert.AreEqual(expected, actual);
         }
+
+        /// <summary>
+        /// Givendetailses the when added with threading should return equal.
+        /// </summary>
+        [TestMethod]
+        public void givendetails_WhenAddedWithThreading_ShouldReturnEqual()
+        {
+            List<EmployeeModel> Models = AddingDataToList();
+            MultiThreading ops = new MultiThreading();
+            bool expected = true;
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            bool actual = ops.AddEmployeesToDBWithThread(Models);
+            stopwatch.Stop();
+            Console.WriteLine("Time taken to add without threads is :{0} ms", stopwatch.ElapsedMilliseconds);
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        /// <summary>
+        /// Givens the details when added to list without threading.
+        /// </summary>
+        [TestMethod]
+        public void givenDetails_WhenAddedToList_WithoutThreading()
+        {
+            MultiThreading ops = new MultiThreading();
+            List<EmployeeModel> Models = AddingDataToList();
+            DateTime startTime = DateTime.Now;
+            ops.AddEmployeePayroll(Models);
+            DateTime stopTime = DateTime.Now;
+            Console.WriteLine("Duration without thread ;" + (stopTime - startTime));
+        }
+
+        /// <summary>
+        /// Givens the details when added to list with threading.
+        /// </summary>
+        [TestMethod]
+        public void givenDetails_WhenAddedToList_WithThreading()
+        {
+            MultiThreading ops = new MultiThreading();
+            List<EmployeeModel> Models = AddingDataToList();
+            DateTime startTimeThread = DateTime.Now;
+            ops.AddEmployeePayrollwithTheard(Models);
+            DateTime stopTimethread = DateTime.Now;
+            Console.WriteLine("Duration with thread ;" + (stopTimethread - startTimeThread));
+        }
+
     }
 
 }
-}
+
+
+
