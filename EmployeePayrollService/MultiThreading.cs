@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EmployeePayrollService
@@ -116,6 +117,22 @@ namespace EmployeePayrollService
             Console.WriteLine(this.listemployeeModel.Count);
         }
 
-        
+        public bool UpdateMultipleEmployeeToDBWithThreading(List<EmployeeModel> models)
+        {
+            EmployeeRepository repo = new EmployeeRepository();
+            bool result = false;
+            models.ForEach(employee =>
+            {
+                Thread thread = new Thread(() =>
+                {
+                    result = repo.updateEmployee(employee);
+                    Console.WriteLine("Employee added" + employee.Name);
+                });
+                thread.Start();
+                thread.Join();
+            });
+            return result;
+        }
+
     }
 }

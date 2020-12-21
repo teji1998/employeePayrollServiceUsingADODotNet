@@ -191,6 +191,30 @@ namespace EmpPayrollTest
             Console.WriteLine("Duration with thread ;" + (stopTimethread - startTimeThread));
         }
 
+        public List<EmployeeModel> updateList()
+        {
+            List<EmployeeModel> upadateList = new List<EmployeeModel>();
+            upadateList.Add(new EmployeeModel { Name = "Teju", Address = "Bangkok" });
+            upadateList.Add(new EmployeeModel { Name = "Liam", Address = "Wadala" });
+            upadateList.Add(new EmployeeModel { Name = "black", Address = "Ktk" });
+            return upadateList;
+
+        }
+        [TestMethod]
+        public void givenDetails_WhenUpdatedToListWithThreading_ShouldUpdateTheList()
+        {
+            List<EmployeeModel> models = updateList();
+            bool expected = true;
+            MultiThreading ops = new MultiThreading();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            bool actual = ops.UpdateMultipleEmployeeToDBWithThreading(models);
+            stopwatch.Stop();
+            Console.WriteLine("Time taken to add to db without threads is :{0} ms", stopwatch.ElapsedMilliseconds);
+            Assert.AreEqual(expected, actual);
+
+        }
+
     }
 
 }
