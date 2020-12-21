@@ -1,6 +1,8 @@
 using EmployeePayrollService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace EmpPayrollTest
 {
@@ -115,5 +117,30 @@ namespace EmpPayrollTest
             Assert.IsTrue(result);
         }
 
+        public List<EmployeeModel> AddingDataToList()
+        {
+            List<EmployeeModel> models = new List<EmployeeModel>();
+
+            models.Add(new EmployeeModel() { Name="Teju",Basic_Pay=90000,Start_Date= new DateTime(2018, 09, 11),Mobile_number="9878675645",Address="mum",Department="Music",Deductions=900,Taxable_Pay=670,Income_Tax=890,Net_Pay=90000,Gender='F' });
+            models.Add(new EmployeeModel() { Name = "Looney", Basic_Pay = 60000, Start_Date = new DateTime(2019, 09, 11), Mobile_number = "9878605645", Address = "mira", Department = "It", Deductions = 1900, Taxable_Pay = 670, Income_Tax = 890, Net_Pay = 90000, Gender = 'M' });
+            models.Add(new EmployeeModel() { Name = "black", Basic_Pay = 900000, Start_Date = new DateTime(2017, 09, 11), Mobile_number = "9878695645", Address = "mumbaiii", Department = "Music", Deductions = 900, Taxable_Pay = 670, Income_Tax = 890, Net_Pay = 90000, Gender = 'M' });
+
+            return models;
+        }
+        [TestMethod]
+        public void AddingToListWithout_Threading()
+        {
+            List<EmployeeModel> listModel = AddingDataToList();
+            bool expected = true;
+            MultiThreading ops = new MultiThreading();
+            Stopwatch stopwatch = new Stopwatch(); //to measure elasped time
+            stopwatch.Start();
+            bool actual = ops.AddMultipleElementToDB(listModel);
+            stopwatch.Stop();
+            Console.WriteLine("Time taken to add to db without threads is :{0} ms", stopwatch.ElapsedMilliseconds);
+            Assert.AreEqual(expected, actual);
+        }
     }
+
+}
 }
