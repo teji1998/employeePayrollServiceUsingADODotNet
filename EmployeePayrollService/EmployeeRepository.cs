@@ -9,7 +9,7 @@ namespace EmployeePayrollService
     public class EmployeeRepository
     {
         public static string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Employee_Payroll_Service;Integrated Security=True";
-        SqlConnection connection = new SqlConnection(connectionString);
+       
 
         /// <summary>
         /// Gets the employees.
@@ -17,14 +17,15 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public void GetEmployees()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 EmployeeModel employeePayroll = new EmployeeModel();
-                using (this.connection)
+                using (connection)
                 {
                     string query = @"select ID ,Name,Basic_Pay, Start_Date ,Mobile_number,Address , Department ,Deductions,Taxable_Pay ,Income_Tax ,Net_Pay,Gender from Employee_Payroll;";
                     SqlCommand cmd = new SqlCommand(query, connection);
-                    this.connection.Open();
+                    connection.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.HasRows)
                     {
@@ -61,7 +62,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -73,11 +74,12 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public bool AddEmployee(EmployeeModel model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand command = new SqlCommand("dbo.SpAddEmployeeDetails", this.connection);
+                    SqlCommand command = new SqlCommand("dbo.SpAddEmployeeDetails", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Name", model.Name);
                     command.Parameters.AddWithValue("@Basic_Pay", model.Basic_Pay);
@@ -119,16 +121,17 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public bool UpdateEmployee(EmployeeModel model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand command = new SqlCommand("spUpdateEmployees", this.connection);
+                    SqlCommand command = new SqlCommand("spUpdateEmployees", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Name", model.Name);
                     command.Parameters.AddWithValue("@Address", model.Address);
                     command.Parameters.AddWithValue("@Department", model.Department);
-                    this.connection.Open();
+                    connection.Open();
                     var result = command.ExecuteNonQuery();
                     Console.WriteLine("Number of rows affected : " + result);
                     if (!result.Equals(0))
@@ -145,7 +148,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -155,14 +158,15 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public void GetEmployeesInDateRange()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 EmployeeModel employeePayroll = new EmployeeModel();
-                using (this.connection)
+                using (connection)
                 {
                     string query = @"Select * from Employee_Payroll Where Start_Date between CAST ('2020-04-14' AS DATE) And  GETDATE();";
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows)
                     {
@@ -192,7 +196,7 @@ namespace EmployeePayrollService
                         Console.WriteLine("No data is found");
                     }
                     reader.Close();
-                    this.connection.Close();
+                    connection.Close();
                 }
             }
             catch (Exception e)
@@ -201,7 +205,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -211,16 +215,17 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public void FindingSumOfSalaryByGender()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 EmployeeModel model = new EmployeeModel();
-                using (this.connection)
+                using (connection)
                 {
                     string query = @" Select Gender,SUM(Payroll.Basic_Pay) as Sum_salary from Payroll payroll inner join Employee emp 
                         on payroll.Employee_id = emp.Employee_id  group by Gender";
 
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.HasRows)
                     {
@@ -236,7 +241,7 @@ namespace EmployeePayrollService
                         Console.WriteLine("No data is found");
                     }
                     dataReader.Close();
-                    this.connection.Close();
+                    connection.Close();
                 }
             }
             catch (Exception e)
@@ -245,7 +250,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -255,15 +260,16 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public void FindingAverageOfSalaryByGender()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 EmployeeModel model = new EmployeeModel();
-                using (this.connection)
+                using (connection)
                 {
                     string query = @"Select Gender,AVG(Payroll.Basic_Pay) as Avg_Pay from Payroll payroll inner join Employee emp
                                     on payroll.Employee_id = emp.Employee_id group by Gender; ";
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.HasRows)
                     {
@@ -279,7 +285,7 @@ namespace EmployeePayrollService
                         Console.WriteLine("No data is found");
                     }
                     dataReader.Close();
-                    this.connection.Close();
+                    connection.Close();
                 }
             }
             catch (Exception e)
@@ -288,7 +294,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -298,16 +304,16 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public void FindingMinimumOfSalaryByGender()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 EmployeeModel model = new EmployeeModel();
-                SqlConnection connection = new SqlConnection(connectionString);
-                using (this.connection)
+                using (connection)
                 {
                     string query = @"string query = @Select Gender, MIN(Payroll.Basic_Pay) as Min_Pay from Payroll payroll inner join Employee 
                                                       emp on payroll.Employee_id = emp.Employee_id group by Gender";
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows)
                     {
@@ -323,7 +329,7 @@ namespace EmployeePayrollService
                         Console.WriteLine("No data is found");
                     }
                     reader.Close();
-                    this.connection.Close();
+                   connection.Close();
                 }
             }
             catch (Exception e)
@@ -332,7 +338,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
 
         }
@@ -343,16 +349,16 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public void FindingMaximumOfSalaryByGender()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                SqlConnection connection = new SqlConnection(connectionString);
                 EmployeeModel model = new EmployeeModel();
-                using (this.connection)
+                using (connection)
                 {
                     string query = @"Select Gender,MAX(Payroll.Basic_Pay) as Max_Pay from Payroll payroll inner join Employee emp
                                     on payroll.Employee_id = emp.Employee_id group by Gender"; 
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows)
                     {
@@ -368,7 +374,7 @@ namespace EmployeePayrollService
                         Console.WriteLine("No data is found");
                     }
                     reader.Close();
-                    this.connection.Close();
+                    connection.Close();
                 }
             }
             catch (Exception e)
@@ -377,7 +383,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -387,16 +393,16 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public void CountContactsByGender()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                SqlConnection connection = new SqlConnection(connectionString);
                 EmployeeModel model = new EmployeeModel();
-                using (this.connection)
+                using (connection)
                 {
                     string query = @"Select Gender,COUNT(Payroll.Basic_Pay) as count from Payroll payroll inner join Employee emp
                                     on payroll.Employee_id = emp.Employee_id group by Gender";
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows)
                     {
@@ -412,7 +418,7 @@ namespace EmployeePayrollService
                         Console.WriteLine("No data is found");
                     }
                     reader.Close();
-                    this.connection.Close();
+                    connection.Close();
                 }
             }
             catch (Exception e)
@@ -430,14 +436,15 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public bool DeleteTheEmployee(EmployeeModel model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand command = new SqlCommand("DeleteEmployees", this.connection);
+                    SqlCommand command = new SqlCommand("DeleteEmployees", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Name", model.Name);
-                    this.connection.Open();
+                    connection.Open();
                     var result = command.ExecuteNonQuery();
                     Console.WriteLine("Number of rows affected : " + result);
                     if (result != 0)
@@ -457,7 +464,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -469,17 +476,18 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public bool AddingEmployeeDetails(EmployeeModel model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand sqlCommand = new SqlCommand("EmployeeInfo", this.connection);
+                    SqlCommand sqlCommand = new SqlCommand("EmployeeInfo", connection);
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@Name", model.Name);
                     sqlCommand.Parameters.AddWithValue("@Gender", model.Gender);
                     sqlCommand.Parameters.AddWithValue("@Mobile_Number", model.Mobile_number);
                     sqlCommand.Parameters.AddWithValue("@Address", model.Address);
-                    this.connection.Open();
+                    connection.Open();
                     var result = sqlCommand.ExecuteNonQuery();
                     Console.WriteLine("Number of rows affected : " + result);
                     if (result != 0)
@@ -498,7 +506,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -510,11 +518,12 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public bool AddingPayRollDetails(EmployeeModel model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand sqlCommand = new SqlCommand("PayrollData", this.connection);
+                    SqlCommand sqlCommand = new SqlCommand("PayrollData", connection);
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@Start_Date", model.Start_Date);
                     sqlCommand.Parameters.AddWithValue("@Basic_Pay", model.Basic_Pay);
@@ -524,7 +533,7 @@ namespace EmployeePayrollService
                     sqlCommand.Parameters.AddWithValue("@Net_Pay", model.Net_Pay);
                     sqlCommand.Parameters.AddWithValue("@employee_id", model.Employee_Id);
 
-                    this.connection.Open();
+                    connection.Open();
                     var result = sqlCommand.ExecuteNonQuery();
                     Console.WriteLine("Number of rows affected : " + result);
                     if (result != 0)
@@ -543,7 +552,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -555,14 +564,15 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public bool AddingDepartment(EmployeeModel model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand sqlCommand = new SqlCommand("DepartmentInfo", this.connection);
+                    SqlCommand sqlCommand = new SqlCommand("DepartmentInfo", connection);
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@Department_Name", model.Department);
-                    this.connection.Open();
+                    connection.Open();
                     var result = sqlCommand.ExecuteNonQuery();
                     Console.WriteLine("Number of rows affected : " + result);
                     if (result != 0)
@@ -582,7 +592,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -594,15 +604,16 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public bool AddingToEmployeeDepartment(EmployeeModel model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand sqlCommand = new SqlCommand("Employee_DepartmentInfo", this.connection);
+                    SqlCommand sqlCommand = new SqlCommand("Employee_DepartmentInfo", connection);
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@Employee_Id", model.Employee_Id);
                     sqlCommand.Parameters.AddWithValue("@Department_Id", model.Department_Id);
-                    this.connection.Open();
+                    connection.Open();
                     var result = sqlCommand.ExecuteNonQuery();
                     Console.WriteLine("Number of rows affected : " + result);
                     if (result != 0)
@@ -621,7 +632,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
 
@@ -631,15 +642,16 @@ namespace EmployeePayrollService
         /// <exception cref="System.Exception"></exception>
         public void GettingEmployeeDetails()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 EmployeeModel model = new EmployeeModel();
-                using (this.connection)
+                using (connection)
                 {
                     string query = @"SELECT Employee_Id,Name,Gender,Mobile_number,Address
                                     FROM Employee";
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.HasRows)
                     {
@@ -661,7 +673,7 @@ namespace EmployeePayrollService
                         Console.WriteLine("No data is found");
                     }
                     dataReader.Close();
-                    this.connection.Close();
+                    connection.Close();
                 }
             }
             catch (Exception e)
@@ -670,18 +682,19 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
 
         }
 
         public bool AddEmployeeDetailsToMultipleTables(EmployeeModel model)
         {
-           try
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand command = new SqlCommand("spAddEmployeeIntoMultipleTable", this.connection);
+                    SqlCommand command = new SqlCommand("spAddEmployeeIntoMultipleTable", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Name", model.Name);
                     command.Parameters.AddWithValue("@Gender", model.Gender);
@@ -690,7 +703,7 @@ namespace EmployeePayrollService
                     command.Parameters.AddWithValue("@Basic_Pay", model.Basic_Pay);
                     command.Parameters.AddWithValue("@Start_Date", model.Start_Date);
                     command.Parameters.AddWithValue("@Department_Id", model.Department_Id);
-                    this.connection.Open();
+                    connection.Open();
                     var result = command.ExecuteNonQuery();
                     Console.WriteLine("Number of rows affected : " + result);
                     if (result != 0)
@@ -709,7 +722,7 @@ namespace EmployeePayrollService
             }
             finally
             {
-                this.connection.Close();
+               connection.Close();
             }
         }
     }

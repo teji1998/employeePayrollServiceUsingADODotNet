@@ -49,13 +49,58 @@ namespace EmployeePayrollService
             emp.Basic_Pay = 700000;
             emp.Department_Id = 5;
             emp.Start_Date = new DateTime(2020, 09, 14);
-           // repo.AddEmployeeDetailsToMultipleTables(emp);
+            // repo.AddEmployeeDetailsToMultipleTables(emp);
             // repo.AddingDepartment(emp);
             //repo.AddingEmployeeDetails(emp);
             /*emp.Employee_Id = 4;
             emp.Department_Id = 6;*/
             //repo.AddingToEmployeeDepartment(emp);
-           // repo.GettingEmployeeDetails();
+            // repo.GettingEmployeeDetails();
+
+            bool i = true;
+            while (i)
+            {
+                Console.WriteLine("\n");
+                Console.WriteLine("1.Sum Of Basic Salary By Gender");
+                Console.WriteLine("2.Average Of Basic Salary By Gender");
+                Console.WriteLine("3.Minimum Of Basic Salary By Gender");
+                Console.WriteLine("4.Maximum Of Basic Salary By Gender");
+                Console.WriteLine("5.Count Of Basic Salary By Gender");
+                Console.WriteLine("6.Exit");
+                try
+                {
+                    int choice = Convert.ToInt32(Console.ReadLine());
+                    switch (choice)
+                    {
+                        case 1:
+                            repo.FindingSumOfSalaryByGender();
+                            break;
+                        case 2:
+                            repo.FindingAverageOfSalaryByGender();
+                            break;
+                        case 3:
+                            repo.FindingMinimumOfSalaryByGender();
+                            break;
+                        case 4:
+                            repo.FindingMaximumOfSalaryByGender();
+                            break;
+                        case 5:
+                            repo.CountContactsByGender();
+                            break;
+                        case 6:
+                            i = false;
+                            break;
+                        default:
+                            Console.WriteLine("Choose valid option");
+                            break;
+                    }
+                }
+                catch (System.FormatException formatException)
+                {
+                    Console.WriteLine(formatException);
+                }
+            }
+
         }
     }
 }
